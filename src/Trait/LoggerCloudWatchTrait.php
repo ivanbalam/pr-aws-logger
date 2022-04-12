@@ -2,7 +2,7 @@
 
 namespace PrAWSLogger\Tr;
 
-use AWSLogger\CloudWatchLogService;
+use PrAWSLogger\CloudWatchLogService;
 
 trait LoggerCloudWatchTrait
 {
