@@ -1,0 +1,23 @@
+{
+    "name": "ivbalam/pr-logger",
+    "description": "AWS CloudWatchLogger and Xray Trait",
+    "type": "library",
+    "require": {
+        "php": ">=7.0",
+        "aws/aws-sdk-php": "^3.216",
+        "monolog/monolog": "2.x-dev",
+        "maxbanton/cwh": "dev-master",
+        "symfony/dotenv": "5.4.x-dev"
+    },
+    "authors": [
+        {
+            "name": "Ivan Balam",
+            "email": "ivbala@palaceresorts.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PrAWSLogger\\": "src/"
+        }
+    }
+}
