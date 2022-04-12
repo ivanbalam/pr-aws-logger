@@ -1,6 +1,6 @@
 <?php
 
-namespace PrAWSLogger;
+namespace PrAWSLogger/Tr;
 
 use AWSLogger\CloudWatchLogService;
 
