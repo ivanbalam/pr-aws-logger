@@ -18,7 +18,7 @@
     "autoload": {
         "psr-4": {
             "PrAWSLogger\\": "src/",
-            "PrAWSLogger\\Tr": "src/Trait"
+            "PrAWSLogger\\Tr\\": "src/Trait"
         }
     }
 }
