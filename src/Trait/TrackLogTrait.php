@@ -1,6 +1,6 @@
 <?php
 
-namespace PrAWSLogger\Trait;
+namespace PrAWSLogger;
 
 trait TrackLogTrait
 {

@@ -3,7 +3,7 @@
 
 namespace PrAWSLogger;
 
-use PrAWSLogger\Trait\TrackLogTrait;
+use PrAWSLogger\TrackLogTrait;
 use Aws\CloudWatchLogs\CloudWatchLogsClient;
 use Maxbanton\Cwh\Handler\CloudWatch;
 use Monolog\Formatter\LineFormatter;
