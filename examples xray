@@ -1,0 +1,68 @@
+public function getElementByMail($mail ,$fechaLlegada, $fechaSalida, $hotel, $idAgente,$fechaRango,$limitofset)
+    {
+        $track_uuid =  $this->request->getHeader('track-uuid');
+        $trace_header = $this->request->getHeader('trace-id');
+        $segment_header = $this->request->getHeader('segment-id');
+
+        $this->initLogger($track_uuid);
+
+        if(empty($trace_header))
+            $this->initSegment(__METHOD__, $this->request,'Get Pro Agents');
+        else
+            $this->setSegmentParent($trace_header, $segment_header);
+
+        try {
+            $where=false;
+            $sql="";
+            if($mail!="null"){
+                $sql.=" mail like '%$mail%' ";
+                $where=true;
+            }
+            if($fechaLlegada!="null"){
+                $and=$sql!=""?" and ":" ";
+                //$fechaLlegada=str_replace("-","/",$fechaLlegada);
+                $sql.="$and FechaLLegada='$fechaLlegada'";
+                $where=true;
+            }
+            $paginate="";
+            if($limitofset!="null"){//
+                /**********/
+                $porciones = explode("_", $limitofset);
+                $uno=$porciones[0];
+                $dos=$porciones[1];
+                /**********/
+                $paginate=" LIMIT $uno OFFSET $dos";
+            }
+
+            $where = (!empty($sql))?(" AND ".$sql):"";
+            $validacion =" WHERE estado = 1 ".$where;
+
+            $sql = "SELECT * FROM $this->modelClass ".$validacion." ORDER BY id_bdm_reservas desc ".$paginate;//emptymail
+
+            $this->initSubsegment('http://urlagency.example','POST',[], $_ENV['SYSTEM_AGENCY']);
+            sleep(3);
+            $this->createSubsegment(202);
+
+            $query = $this->modelsManager->createQuery($sql);
+            $this->initSqlSegment($query);
+            $data = $query->execute();
+            $this->createSqlSegment();
+
+            if ($data) {
+                if(empty($trace_header))
+                    $this->createSegment(200);
+                $this->response->setStatusCode(200);
+                $this->response->setJsonContent(array("data"=>$data));
+                return $this->response->send();
+            }
+        } catch (\Exception $e) {
+            if(empty($trace_header)){
+                $this->attachException($e);
+                $this->createSegment(500);
+            }
+            $data = ['data' => [],'message' => $e->getMessage(),"error" => true];
+            $this->response->setJsonContent($data);
+            $this->response->setStatusCode(500);
+            return $this->response->send();
+        }
+    }

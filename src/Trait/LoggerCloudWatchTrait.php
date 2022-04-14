@@ -6,6 +6,7 @@ use PrAWSLogger\CloudWatchLogService;
 
 trait LoggerCloudWatchTrait
 {
+    use TrackLogTrait;
 
     public $track_uuid;
     private $service;

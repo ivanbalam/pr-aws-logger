@@ -60,7 +60,7 @@ class CloudWatchLogService
 
         if($_ENV['LOGGER_FILE']){
             $this->logFile = $_ENV['LOGGER_FILE_PATH'];
-            $infoHandler = new StreamHandler(__DIR__."/".$this->logFile, Logger::INFO);
+            $infoHandler = new StreamHandler($this->logFile, Logger::INFO);
             $formatter = new LineFormatter(null, null, false, true);
             $infoHandler->setFormatter($formatter);
             $this->logger->pushHandler($infoHandler);
