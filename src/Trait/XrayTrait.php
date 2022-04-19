@@ -128,9 +128,9 @@ trait XrayTrait
             "trace_id" => $this->trace_id,
             "parent_id" => $this->segment_id,
             "sql"  => [
-                "url" => $_ENV['DB_HOST'],
-                "database_type" => $_ENV['DB_ADAPTER'],
-                "user" => $_ENV['DB_USER'],
+                "url" => $_ENV['DB_WRITE_HOST'],
+                "database_type" => $_ENV['DB_WRITE_ADAPTER'],
+                "user" => $_ENV['DB_WRITE_USER'],
                 "sanitized_query" => ($string)?$query:$query['sql']
             ]
         ];
