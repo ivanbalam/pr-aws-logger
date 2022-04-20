@@ -10,11 +10,7 @@ trait XrayTrait
     private $appName;
     private $awsCredentials = [
         'region' => 'us-east-1',
-        'version' => 'latest',
-        'credentials' => [
-            'key' => null,
-            'secret' => null
-        ]
+        'version' => 'latest'
     ];
 
     private $hex_time;
@@ -38,8 +34,13 @@ trait XrayTrait
 
     private function initXray(){
         $this->appName = $_ENV['APP_NAME'];
-        $this->awsCredentials['credentials']['key'] = $_ENV['AWS_SDK_KEY'];
-        $this->awsCredentials['credentials']['secret'] = $_ENV['AWS_SDK_SECRET'];
+        
+        if($_ENV['AWS_USE_CREDENTIALS']==true){
+            $this->awsCredentials['credentials']= [
+                'key' => $_ENV['AWS_SDK_KEY'],
+                'secret' => $_ENV['AWS_SDK_SECRET']
+            ];
+        }
         //$daemon_config = array_merge($this->awsCredentials,['endpoint' => 'http://xray.palaceresorts:2000']);
         $this->xray = new XRayClient($this->awsCredentials);
         $hex_time = dechex(time());
