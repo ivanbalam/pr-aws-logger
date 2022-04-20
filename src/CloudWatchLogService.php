@@ -19,11 +19,7 @@ class CloudWatchLogService
     private $appName = "";
     private $awsCredentials = [
         'region' => 'us-east-1',
-        'version' => 'latest',
-        'credentials' => [
-            'key' => null,
-            'secret' => null
-        ]
+        'version' => 'latest'
     ];
 
     private $logger;
@@ -35,8 +31,13 @@ class CloudWatchLogService
             $this->track_uuid = $this->generateTrackId("{$_ENV['APP_NAME']}@palaceresorts.com");
         $instance = (!empty($instance))?$instance:(date("Ymd").'-'.$_ENV['APP_NAME']);
         $this->appName = $_ENV['APP_NAME'];
-        $this->awsCredentials['credentials']['key'] = $_ENV['AWS_SDK_KEY'];
-        $this->awsCredentials['credentials']['secret'] = $_ENV['AWS_SDK_SECRET'];
+
+        if($_ENV['AWS_USE_CREDENTIALS']==true){
+            $this->awsCredentials['credentials']= [
+                'key' => $_ENV['AWS_SDK_KEY'],
+                'secret' => $_ENV['AWS_SDK_SECRET']
+            ];
+        }
 
         $cwClient = new CloudWatchLogsClient($this->awsCredentials);
         // Log group name, will be created if none
