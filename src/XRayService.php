@@ -86,21 +86,25 @@ class XRayService
 
     public function attachException($error, $remote = false, $subsegment = false){
         $method = (isset($error->getTrace()[0]["function"])?$error->getTrace()[0]["function"]:"Undefined");
+        $stack =[
+            'path' => $error->getFile(),
+            'line' => $error->getLine(),
+            'label' => $method
+        ];
         $exception = [
             'id' => $this->idHexacGenerate(),
             'message' => $error->getMessage(),
             'type' => $error->getCode(),
             'remote' => $remote,
-            'stack' => [
-                'path' => $error->getFile(),
-                'line' => $error->getLine(),
-                'label' => $method
-            ]
+            'stack' => [$stack]
         ];
+
         if(!$subsegment){
-            $this->segment['exception'] = $exception;
+            $this->segment['error'] = true;
+            $this->segment['cause']['exceptions'] = [$exception];
         }else{
-            $this->subsegment['exception'] = $exception;
+            $this->subsegment['error'] = true;
+            $this->subsegment['cause']['exceptions'] = [$exception];
         }
     }
 
