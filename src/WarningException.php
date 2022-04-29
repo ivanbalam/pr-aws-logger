@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Helpers;
+namespace PrAWSLogger;
 
 class WarningException extends \Exception{
 
