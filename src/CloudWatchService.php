@@ -121,14 +121,14 @@ class CloudWatchService
         $this->logger = null;
     }
 
-    public function errorCurl($message, $code, $system = null){
+    public function errorCurl($message, $code = 0, $system = null){
         $this->initLogger();
         $instance = explode('::', $this->instance);
         $this->logger->error('message ', $this->generateData($system, $instance[0], $instance[1], $message, $code));
         $this->reset();
     }
 
-    public function warn($message, $code, $system = null){
+    public function warn($message, $code = 0, $system = null){
         $this->initLogger();
         $instance = explode('::', $this->instance);
         $this->logger->warning('message ', $this->generateData($system, $instance[0], $instance[1], $message, $code));
@@ -138,6 +138,13 @@ class CloudWatchService
     public function setWarning($data, $system = null){
         $this->initLogger();
         $this->logger->warning('message ', $this->createInfoLogger($data, $system));
+        $this->reset();
+    }
+
+    public function info($message, $code = 0, $system = null){
+        $this->initLogger();
+        $instance = explode('::', $this->instance);
+        $this->logger->info('message ', $this->generateData($system, $instance[0], $instance[1], $message, $code));
         $this->reset();
     }
 
