@@ -93,7 +93,7 @@ class XRayService
         ];
         $exception = [
             'id' => $this->idHexacGenerate(),
-            'message' => $error->getMessage(),
+            'message' => utf8_encode($error->getMessage()),
             'type' => $error->getCode(),
             'remote' => $remote,
             'stack' => [$stack]
