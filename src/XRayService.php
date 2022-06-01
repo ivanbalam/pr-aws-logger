@@ -108,7 +108,7 @@ class XRayService
         }
     }
 
-    public function initSegment($instance, $request, $segmento = 'General'){
+    public function initSegment($instance, $request, $segmento = 'General', $data = null){
         $instance = explode('::', $instance);
         $this->segment = [
             "name" => $_ENV['APP_NAME'],
@@ -134,7 +134,7 @@ class XRayService
                 "system" => $this->appName,
             ],
             "metadata" => [
-                "body" => $request->getJsonRawBody()
+                "body" => ($data!==null)?$data:$request->getJsonRawBody()
             ]
         ];
     }

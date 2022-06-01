@@ -78,6 +78,10 @@ class CloudWatchService
         $this->request['body'] = $request->getJsonRawBody(true);
     }
 
+    public function setRequestBody($data){
+        $this->request['body'] = $data;
+    }
+
     private function initLogger($retencion = 90) {
         $this->appName = $_ENV['APP_NAME'];
 
