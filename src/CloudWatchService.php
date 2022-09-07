@@ -38,7 +38,7 @@ class CloudWatchService
         if(empty($track_uuid))
             $track_uuid = $this->generateTrackId("{$_ENV['APP_NAME']}@palaceresorts.com");
 
-        $this->stream = date("Ymd").'-'.$_ENV['APP_NAME'];
+        $this->stream = $_ENV['APP_NAME'].'-'.date("Ymd").'-'.$track_uuid;
         $this->group = $_ENV['AWS_CLOUDWATCH_GROUP'];
         $this->track_uuid = $track_uuid;
     }
